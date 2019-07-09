@@ -1,3 +1,0 @@
-testing
-
-export default KEY
