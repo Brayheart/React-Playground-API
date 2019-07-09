@@ -1,0 +1,19 @@
+.test {
+  color: blue;
+}
+
+#base{
+  background-color: #F8F9FA;
+}
+
+#card-1{
+  background-color: lightblue; 
+}
+
+h3, h4 {
+  margin-top: 10px;
+}
+
+div {
+  margin-top: 10px;
+}
