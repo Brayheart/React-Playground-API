@@ -3,12 +3,9 @@ import axios from 'axios'
 import './app.css'
 import KEY from './api.js'
 import lodash from 'lodash'
+import SearchBar from './components/searchBar' 
 import { 
   Container,
-  Form, 
-  FormControl, 
-  Button, 
-  Navbar, 
   Card,
   Row,
   Col
@@ -69,7 +66,6 @@ class App extends Component {
   callMyApi = (url) => {
     axios.get(url)
       .then(resp => {
-        // console.log(resp)
         this.setState({
           weather: resp.data
         })
@@ -120,23 +116,8 @@ class App extends Component {
     return (
       <div>
         <Container id='base'>
-          <Navbar bg="light" expand="lg">
-            <Navbar.Brand href="#home">Weather Report</Navbar.Brand>
-              <Form inline 
-              onSubmit={() => this.onFormSubmit(this.state.zipcode)}
-              >
-                <FormControl placeholder="Search" className="mr-sm-2" 
-                  type="text"
-                  value={this.state.zipcode}
-                  onChange={e => this.setState({ zipcode: e.target.value })}
-                  />
-                <Button type="submit" variant="outline-success">Search</Button>
-              </Form>
-          </Navbar>
+          <SearchBar/>
           
-{/* {console.log(this.state.weather)} */}
-{console.log(this.state.forecast)}
-
         <div style={{
           margin: "0 auto",
           textAlign: "center"
@@ -156,52 +137,51 @@ class App extends Component {
                   <Card.Body>
                     <Card.Title>{lodash.get(this.state, 'forecast.list[0].weather[0].description')}</Card.Title>
                     <Card.Text>
-                      {/* {this.state.forecast.list[0].weather[0].main} */}
-                      Temp
+                      {lodash.get(this.state, 'forecast.list[0].main.temp')}℉
                   </Card.Text>
                   </Card.Body>
                 </Card>
             </Col>
             <Col s={2}>
                 <Card bg="secondary" text="white" >
-                  <Card.Header>Icon</Card.Header>
+                  <Card.Header>{this.icon(lodash.get(this.state, 'forecast.list[8].weather[0].main'))}</Card.Header>
                   <Card.Body>
-                    <Card.Title>Day 2</Card.Title>
+                    <Card.Title>{(lodash.get(this.state, 'forecast.list[8].weather[0].description'))}</Card.Title>
                     <Card.Text>
-                      Temp
+                      {lodash.get(this.state, 'forecast.list[8].main.temp')}℉
                   </Card.Text>
                   </Card.Body>
                 </Card>
             </Col>
             <Col s={2}>
                 <Card bg="success" text="white" >
-                  <Card.Header>Icon</Card.Header>
+                  <Card.Header>{this.icon(lodash.get(this.state, 'forecast.list[16].weather[0].main'))}</Card.Header>
                   <Card.Body>
-                    <Card.Title>Day 3</Card.Title>
+                    <Card.Title>{(lodash.get(this.state, 'forecast.list[16].weather[0].description'))}</Card.Title>
                     <Card.Text>
-                      Temp
+                      {lodash.get(this.state, 'forecast.list[16].main.temp')}℉
                   </Card.Text>
                   </Card.Body>
                 </Card>
             </Col>
             <Col s={2}>
                 <Card bg="warning" text="white" >
-                  <Card.Header>Icon</Card.Header>
+                <Card.Header>{this.icon(lodash.get(this.state, 'forecast.list[24].weather[0].main'))}</Card.Header>
                   <Card.Body>
-                    <Card.Title>Day 4</Card.Title>
+                    <Card.Title>{(lodash.get(this.state, 'forecast.list[24].weather[0].description'))}</Card.Title>
                     <Card.Text>
-                      Temp
+                      {lodash.get(this.state, 'forecast.list[24].main.temp')}℉
                   </Card.Text>
                   </Card.Body>
                 </Card>
             </Col>
             <Col s={2}>
                 <Card bg="info" text="white" >
-                  <Card.Header>Icon</Card.Header>
+                <Card.Header>{this.icon(lodash.get(this.state, 'forecast.list[32].weather[0].main'))}</Card.Header>
                   <Card.Body>
-                    <Card.Title>Day 5</Card.Title>
+                    <Card.Title>{(lodash.get(this.state, 'forecast.list[32].weather[0].description'))}</Card.Title>
                     <Card.Text>
-                      Temp
+                      {lodash.get(this.state, 'forecast.list[32].main.temp')}℉
                   </Card.Text>
                   </Card.Body>
                 </Card>
@@ -222,6 +202,12 @@ class App extends Component {
 
 export default App;
 
+/* TODO:
+map card componenets 
+search by city
+searchbar input linked to url 
+change color based on temp?
+*/
 
 /* 
 https: //github.com/HackerNews/API
