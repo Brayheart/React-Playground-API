@@ -4,6 +4,8 @@ import './app.css'
 import KEY from './api.js'
 import lodash from 'lodash'
 import SearchBar from './components/searchBar' 
+import Main from './components/Main'
+import Cards from './components/Cards'
 import { 
   Container,
   Card,
@@ -83,6 +85,7 @@ class App extends Component {
   }
 
   onFormSubmit = (zipcode) => {
+    console.log(zipcode)
     this.callMyApi(`https://api.openweathermap.org/data/2.5/weather?zip=${zipcode}&appid=${KEY}&units=imperial&units=imperial
 `)
     this.callMyForecast(`https://api.openweathermap.org/data/2.5/forecast?zip=${zipcode}&appid=${KEY}&units=imperial
@@ -116,84 +119,18 @@ class App extends Component {
     return (
       <div>
         <Container id='base'>
-          <SearchBar/>
-          
-        <div style={{
-          margin: "0 auto",
-          textAlign: "center"
-        }}>
-          <div className='test'>{this.icon(this.state.weather.weather[0].main)}</div>
-          <div>{this.state.weather.weather[0].description}</div>
-          <h4>{this.state.weather.main.temp}℉</h4>
-          <h3>{this.state.weather.main.temp_max}℉/{this.state.weather.main.temp_min}℉</h3>
-          <div>{this.state.weather.name}</div>
-            <Card bg="light" >
-              <Card.Header><h3>5 day forecast</h3></Card.Header>
-              <Card.Body>
-                <Row>
-            <Col s={2}>
-                <Card bg="primary" text="white" >
-                  <Card.Header>{this.icon(lodash.get(this.state, 'forecast.list[0].weather[0].main'))}</Card.Header>
-                  <Card.Body>
-                    <Card.Title>{lodash.get(this.state, 'forecast.list[0].weather[0].description')}</Card.Title>
-                    <Card.Text>
-                      {lodash.get(this.state, 'forecast.list[0].main.temp')}℉
-                  </Card.Text>
-                  </Card.Body>
-                </Card>
-            </Col>
-            <Col s={2}>
-                <Card bg="secondary" text="white" >
-                  <Card.Header>{this.icon(lodash.get(this.state, 'forecast.list[8].weather[0].main'))}</Card.Header>
-                  <Card.Body>
-                    <Card.Title>{(lodash.get(this.state, 'forecast.list[8].weather[0].description'))}</Card.Title>
-                    <Card.Text>
-                      {lodash.get(this.state, 'forecast.list[8].main.temp')}℉
-                  </Card.Text>
-                  </Card.Body>
-                </Card>
-            </Col>
-            <Col s={2}>
-                <Card bg="success" text="white" >
-                  <Card.Header>{this.icon(lodash.get(this.state, 'forecast.list[16].weather[0].main'))}</Card.Header>
-                  <Card.Body>
-                    <Card.Title>{(lodash.get(this.state, 'forecast.list[16].weather[0].description'))}</Card.Title>
-                    <Card.Text>
-                      {lodash.get(this.state, 'forecast.list[16].main.temp')}℉
-                  </Card.Text>
-                  </Card.Body>
-                </Card>
-            </Col>
-            <Col s={2}>
-                <Card bg="warning" text="white" >
-                <Card.Header>{this.icon(lodash.get(this.state, 'forecast.list[24].weather[0].main'))}</Card.Header>
-                  <Card.Body>
-                    <Card.Title>{(lodash.get(this.state, 'forecast.list[24].weather[0].description'))}</Card.Title>
-                    <Card.Text>
-                      {lodash.get(this.state, 'forecast.list[24].main.temp')}℉
-                  </Card.Text>
-                  </Card.Body>
-                </Card>
-            </Col>
-            <Col s={2}>
-                <Card bg="info" text="white" >
-                <Card.Header>{this.icon(lodash.get(this.state, 'forecast.list[32].weather[0].main'))}</Card.Header>
-                  <Card.Body>
-                    <Card.Title>{(lodash.get(this.state, 'forecast.list[32].weather[0].description'))}</Card.Title>
-                    <Card.Text>
-                      {lodash.get(this.state, 'forecast.list[32].main.temp')}℉
-                  </Card.Text>
-                  </Card.Body>
-                </Card>
-            </Col>
-          </Row>
-              </Card.Body>
-            </Card>
-          
-        </div>
-
-
-
+          <SearchBar 
+            zipcode={this.state.zipcode}
+            onFormSubmit={this.onFormSubmit}
+            updateZip={(e) => this.setState({zipcode: e.target.value})}
+          />
+          <Main 
+            weather={this.state.weather} 
+            icon={this.icon}
+          />
+          <Cards
+            forecast={this.state.forecast}
+          />
           </Container>
       </div>
     );

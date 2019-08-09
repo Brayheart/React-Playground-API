@@ -2,6 +2,11 @@
   color: blue;
 }
 
+#root {
+  margin: 0 auto;
+  padding: 0;
+}
+
 #base{
   background-color: #F8F9FA;
 }
